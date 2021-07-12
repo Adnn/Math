@@ -23,7 +23,6 @@ jobs:
           submodules: recursive
       - name: Prepare recipe info
         id: recipe
-        run: echo "::set-output name=repo::${GITHUB_REPOSITORY#*/}"
         run: echo "::set-output name=reference::${GITHUB_REPOSITORY#*/}/$(echo ${GITHUB_SHA} | cut -c1-7)"
         shell: bash
       - name: Output recipe ref
