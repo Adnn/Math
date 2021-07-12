@@ -56,5 +56,5 @@ jobs:
           conan remote add adnn https://adnn.jfrog.io/artifactory/api/conan/adnn-conan
           conan user -p ${{ secrets.CONAN_USER_PASSWORD }} -r adnn github-actions
           conan copy --all ${{ steps.recipe.reference }} adnn/develop
-          conan upload "${{ steps.recipe.reference }}@adnn/develop" -r adnn
+          conan upload "${{ steps.recipe.outputs.reference }}@adnn/develop" -r adnn
 
