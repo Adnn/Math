@@ -51,7 +51,7 @@ jobs:
           tests
           ./deactivate_run.ps1
       - name: Deploy recipe (develop)
-        if: ${{ contains('refs/head/develop', github.ref) }}
+        if: ${{ contains('refs/heads/develop', github.ref) }}
         run: |
           conan remote add adnn https://adnn.jfrog.io/artifactory/api/conan/adnn-conan
           conan user -p ${{ secrets.CONAN_USER_PASSWORD }} -r adnn github-actions
