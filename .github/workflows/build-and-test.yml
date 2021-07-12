@@ -21,6 +21,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: recursive
+      - name: Get recipe reference
+        id: recipe
+        run: echo "::set-output name=reference::${GITHUB_REPOSITORY#*/}/$(echo ${GITHUB_SHA} | cut -c1-7)"
+        shell: bash
+      - name: Output recipe ref
+        run: echo "Recipe reference: '${{ steps.recipe.reference }}'"
       - name: Get Conan
         uses: turtlebrowser/get-conan@v1.0
       - run: >
@@ -44,3 +50,11 @@ jobs:
           ./activate_run.ps1
           tests
           ./deactivate_run.ps1
+      - name: Deploy recipe (develop)
+        if: ${{ success() && contains('refs/head/develop', github.ref) }}
+        run: |
+          conan remote add adnn https://adnn.jfrog.io/artifactory/api/conan/adnn-conan
+          conan user -p ${{ secrets.CONAN_USER_PASSWORD }} -r adnn github-actions
+          conan copy --all ${{ steps.recipe.reference }} adnn/develop
+          conan upload "${{ steps.recipe.reference }}@adnn/develop" -r adnn
+
