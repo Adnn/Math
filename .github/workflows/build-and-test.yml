@@ -26,7 +26,7 @@ jobs:
         run: echo "::set-output name=reference::${GITHUB_REPOSITORY#*/}/$(echo ${GITHUB_SHA} | cut -c1-7)"
         shell: bash
       - name: Output recipe ref
-        run: echo "Recipe reference: ${{ steps.recipe.outputs.reference }}"
+        run: echo Recipe reference: ${{ steps.recipe.outputs.reference }}
       - name: Get Conan
         uses: turtlebrowser/get-conan@v1.0
       - run: >
